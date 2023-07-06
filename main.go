@@ -1,7 +1,9 @@
 package main
 
 import (
-	
+	"LandTicket-Backend/database"
+	"LandTicket-Backend/pkg/mysql"
+	"LandTicket-Backend/routes"
 
 	"github.com/labstack/echo/v4"
 )
@@ -9,7 +11,12 @@ import (
 func main() {
 	e := echo.New()
 
-	
+	mysql.DatabaseInit()
+	database.RunMigration()
+
+	routes.RouteInit(e.Group("/api/v1"))
+
+
 
 	e.Logger.Fatal(e.Start("localhost:5000"))
 }
