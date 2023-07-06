@@ -8,7 +8,7 @@ import (
 
 type UserRepository interface {
 	FindUser() ([]models.User, error)
-	// GetUser() ([]models.User, error)
+	GetUser(ID int) (models.User, error)
 }
 
 type repository struct {
@@ -26,9 +26,9 @@ func (r *repository) FindUser() ([]models.User, error){
 	return users, err
 }
 
-// func (r *repository) GetUser(ID int) ([]models.User, error){
-// 	var user []models.User
-// 	err := r.db.Raw("SELECT * FROM users WHERE id=?", ID).Scan(&user).Error
+func (r *repository) GetUser(ID int) (models.User, error){
+	var user models.User
+	err := r.db.Raw("SELECT * FROM users WHERE id=?", ID).Scan(&user).Error
 
-// 	return user, err
-// }
+	return user, err
+}

@@ -9,9 +9,9 @@ import (
 )
 
 func UserRoutes(e *echo.Group){
-	r := repositories.RepositoryUser(mysql.DB)
-	h := handlers.HandlerUser(r)
+	userRepository := repositories.RepositoryUser(mysql.DB)
+	h := handlers.HandlerUser(userRepository)
 
 	e.GET("/users", h.FindUsers)
-	// e.GET("/user/:id", h.GetUser)
+	e.GET("/user/:id", h.GetUser)
 }
