@@ -9,11 +9,6 @@ import (
 type UserRepository interface {
 	FindUser() ([]models.User, error)
 	GetUser(ID int) (models.User, error)
-	
-}
-
-type repository struct {
-	db *gorm.DB
 }
 
 func RepositoryUser(db *gorm.DB) *repository {
