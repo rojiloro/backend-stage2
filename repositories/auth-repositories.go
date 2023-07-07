@@ -9,6 +9,7 @@ import (
 
 type AuthRepository interface {
 	CreateUser(user models.User) (models.User, error)
+	Login(email string) (models.User, error)
 }
 
 func RepositoryAuth(db *gorm.DB) *repository {
@@ -17,6 +18,13 @@ func RepositoryAuth(db *gorm.DB) *repository {
 
 func (r *repository) CreateUser(user models.User)(models.User, error){
 	err := r.db.Exec("INSERT INTO users(fullname, username, email, password, created_at, updated_at) VALUES (?,?,?,?,?,?)", user.Fullname, user.Username, user.Email, user.Password, time.Now(), time.Now()).Error
+
+	return user, err
+}
+
+func (r *repository) Login(email string)(models.User, error){
+	var user models.User
+	err := r.db.First(&user, "email=?", email).Error
 
 	return user, err
 }

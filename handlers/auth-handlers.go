@@ -5,10 +5,14 @@ import (
 	dto "LandTicket-Backend/dto/result"
 	"LandTicket-Backend/models"
 	bcrypt "LandTicket-Backend/pkg/bycript"
+	jwtToken "LandTicket-Backend/pkg/jwt"
 	"LandTicket-Backend/repositories"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )
 
@@ -53,4 +57,47 @@ func (h *handlerAuth) CreateUser(c echo.Context) error{
 
 	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: convertResponse(data) })
 
+}
+
+func (h *handlerAuth) Login(c echo.Context) error {
+	request := new(authdto.LoginRequest)
+	if err:= c.Bind(request); err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+
+	user := models.User{
+		Email: request.Email,
+		Password: request.Password,
+	}
+
+	// check email
+	user, err := h.AuthRepository.Login(user.Email)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+	// check password
+	isValid := bcrypt.CheckPasswordHash(request.Password, user.Password)
+	if !isValid {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: "wrong email or password"})
+	}
+
+	// generate token
+	claims := jwt.MapClaims{}
+	claims["id"] = user.ID
+	claims["exp"] = time.Now().Add(time.Hour * 2).Unix()
+
+	token, errGenerateToken := jwtToken.GenerateToken(&claims)
+	if errGenerateToken != nil {
+		log.Println(errGenerateToken)
+		return echo.NewHTTPError(http.StatusUnauthorized)
+	}
+
+	loginResponse := authdto.LoginResponse{
+		Username: user.Username,
+		Email: user.Email,
+		Password: user.Password,
+		Token: token,
+	}
+
+	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: loginResponse})
 }
