@@ -13,4 +13,6 @@ type Ticket struct {
 	ArrivalTime          string  `json:"arrival_time" gorm:"type: varchar(255)"`
 	Price                int     `json:"price" gorm:"type : int"`
 	Qty                  int     `json:"qty" gorm:"type : int"`
+	UserId               int     `json:"user_id" form:"user_id"`
+	User                 User    `json:"user" `
 }

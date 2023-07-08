@@ -31,7 +31,7 @@ func (r *repository) FindTicket()([]models.Ticket, error){
 
 func (r *repository) GetTicket(ID int)(models.Ticket, error){
 	var ticket models.Ticket
-	err := r.db.Preload("StartStation").Preload("DestinationStation").First(&ticket, ID).Error
+	err := r.db.Preload("StartStation").Preload("DestinationStation").Preload("User").First(&ticket, ID).Error
 
 	return ticket, err
 }

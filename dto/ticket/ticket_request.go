@@ -10,6 +10,7 @@ type CreateTicketRequest struct {
 	ArrivalTime          string `json:"arrival_time" form:"arrival_time" validate:"required"`
 	Price                int    `json:"price" form:"price" validate:"required"`
 	Qty                  int    `json:"qty" form:"qty" validate:"required"`
+	UserId               int    `json:"user_id" form:"user_id" validate:"required"`
 }
 
 type UpdateTicketRequest struct {
