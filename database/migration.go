@@ -8,7 +8,11 @@ import (
 
 // automatic Migration if running app
 func RunMigration(){
-	err := mysql.DB.AutoMigrate(&models.User{}, &models.Station{})
+	err := mysql.DB.AutoMigrate(
+		&models.User{},
+		&models.Station{},
+		&models.Ticket{},
+	)
 
 	if err != nil {
 		panic("migration failed")
