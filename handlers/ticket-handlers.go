@@ -42,6 +42,7 @@ func (h *handlersTicket) CreateTicket(c echo.Context) error {
 		DestinationStationID: request.DestinationStationID,
 		ArrivalTime: request.ArrivalTime,
 		Price: request.Price,
+		Qty: request.Qty,
 	}
 
 	data, err := h.TicketRepository.CreateTicket(ticket)
