@@ -7,12 +7,9 @@ type TicketResponse struct {
 	StartDate            string `json:"start_date_train"`
 	StartStationID       int    `json:"start_station_id"`
 	StartTime            string `json:"start_time" `
-	DestinationStationID int    `json:"destination_station_id" `
+	DestinationStationID int    `json:"destination_station_id"`
 	ArrivalTime          string `json:"arrival_time"`
 	Price                int    `json:"price"`
 	Qty                  int    `json:"qty"`
 	UserID               int    `json:"user_id"`
-	Username             string `json:"username"`
-	Email                string `json:"email"`
-	No_Hp                string `json:"no_hp`
 }

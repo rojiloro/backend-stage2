@@ -22,9 +22,9 @@ func (r *repository) CreateUser(user models.User)(models.User, error){
 	return user, err
 }
 
-func (r *repository) Login(email string)(models.User, error){
+func (r *repository) Login(Email string)(models.User, error){
 	var user models.User
-	err := r.db.First(&user, "email=?", email).Error
+	err := r.db.First(&user, "email=?", Email).Error
 
 	return user, err
 }

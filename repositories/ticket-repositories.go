@@ -17,7 +17,7 @@ func RepositoryTicket(db *gorm.DB) *repository {
 }
 
 func (r *repository) CreateTicket(ticket models.Ticket)(models.Ticket, error){
-	err := r.db.Preload("station").Create(&ticket).Error
+	err := r.db.Preload("Station").Create(&ticket).Error
 
 	return ticket, err
 }
@@ -31,7 +31,7 @@ func (r *repository) FindTicket()([]models.Ticket, error){
 
 func (r *repository) GetTicket(ID int)(models.Ticket, error){
 	var ticket models.Ticket
-	err := r.db.Preload("StartStation").Preload("DestinationStation").Preload("User").First(&ticket, ID).Error
+	err := r.db.Preload("StartStation").Preload("DestinationStation").First(&ticket, ID).Error
 
 	return ticket, err
 }
