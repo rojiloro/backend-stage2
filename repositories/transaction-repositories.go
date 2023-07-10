@@ -24,7 +24,7 @@ func (r *repository) CreateTransaction(transaction models.Transaction)(models.Tr
 
 func (r *repository) FindTransaction()([]models.Transaction, error){
 	var transaction []models.Transaction
-	err := r.db.Preload("User").Preload("Ticket").Find(&transaction).Error
+	err := r.db.Preload("User").Preload("Ticket").Preload("Ticket.StartStation").Preload("Ticket.DestinationStation").Find(&transaction).Error
 
 	return transaction, err
 }
