@@ -20,6 +20,7 @@ func HandlerStation(StationRepository repositories.StationRepository) *handlerSt
 }
 
 func (h *handlerStation) CreateStation(c echo.Context) error {
+	
 	request := new(stationdto.CreateStationRequest)
 	if err:=c.Bind(request) ;err != nil {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})

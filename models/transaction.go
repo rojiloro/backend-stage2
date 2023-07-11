@@ -6,4 +6,6 @@ type Transaction struct {
 	User     User   `json:"user"`
 	TicketId int    `json:"ticket_id"`
 	Ticket   Ticket `json:"ticket"`
+	Image    string `json:"image"`
+	Status   string `json:"status"`
 }
