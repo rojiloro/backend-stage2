@@ -23,7 +23,7 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusUnauthorized, dto.ErrorResult{Code: http.StatusBadRequest, Message: "unauthorized"})
 		}
 
-		token = strings.Split(token, "")[1]
+		token = strings.Split(token, " ")[1]
 		claims, err := jwtToken.DecodeToken(token)
 
 		if err != nil {
